@@ -213,7 +213,7 @@
       display: none;
     }
 
-    /* FULLSCREEN IMAGE PREVIEW LIGHTBOX */
+    /* FULLSCREEN IMAGE PREVIEW LIGHTBOX WITH PERSON NAME HEADER */
     #lightbox {
       display: none;
       position: fixed;
@@ -221,7 +221,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(5, 2, 10, 0.9);
+      background: rgba(5, 2, 10, 0.92);
       backdrop-filter: blur(12px);
       z-index: 999;
       justify-content: center;
@@ -229,12 +229,20 @@
       flex-direction: column;
     }
 
+    .lightbox-title {
+      font-size: 1.8rem;
+      color: #f472b6;
+      text-shadow: 0 0 15px rgba(244, 114, 182, 0.8);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
     #lightbox img {
       max-width: 85%;
-      max-height: 80vh;
-      border-radius: 16px;
+      max-height: 75vh;
+      border-radius: 18px;
       border: 2px solid #f472b6;
-      box-shadow: 0 0 40px rgba(236, 72, 153, 0.5);
+      box-shadow: 0 0 45px rgba(236, 72, 153, 0.6);
     }
 
     .close-lightbox {
@@ -269,6 +277,9 @@
       .plus-btn {
         width: 38px;
         height: 38px;
+        font-size: 1.3rem;
+      }
+      .lightbox-title {
         font-size: 1.3rem;
       }
     }
@@ -331,10 +342,11 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX MODAL FOR FULLSCREEN IMAGE VIEW -->
+  <!-- LIGHTBOX MODAL SHOWING CHINMUDRA'S IMAGE PREVIEW -->
   <div id="lightbox" onclick="closeLightbox()">
     <span class="close-lightbox">&times;</span>
-    <img id="lightboxImg" src="" alt="Full Preview" />
+    <div class="lightbox-title">Memories with Chinmudra ✨</div>
+    <img id="lightboxImg" src="" alt="Chinmudra Memory" />
   </div>
 
   <script>
