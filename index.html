@@ -201,10 +201,51 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .photo-slot img:hover {
+      transform: scale(1.08);
     }
 
     input[type="file"] {
       display: none;
+    }
+
+    /* FULLSCREEN IMAGE PREVIEW LIGHTBOX */
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 2, 10, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #lightbox img {
+      max-width: 85%;
+      max-height: 80vh;
+      border-radius: 16px;
+      border: 2px solid #f472b6;
+      box-shadow: 0 0 40px rgba(236, 72, 153, 0.5);
+    }
+
+    .close-lightbox {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: #f472b6;
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
     }
 
     @media (max-width: 620px) {
@@ -290,6 +331,12 @@
     </div>
   </div>
 
+  <!-- LIGHTBOX MODAL FOR FULLSCREEN IMAGE VIEW -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <span class="close-lightbox">&times;</span>
+    <img id="lightboxImg" src="" alt="Full Preview" />
+  </div>
+
   <script>
     /* 1. PINK RAIN MATRIX ANIMATION */
     const canvas = document.getElementById('pinkRainCanvas');
@@ -343,7 +390,6 @@
       posX += velX;
       posY += velY;
 
-      // Bounce off walls continuously
       if (posX <= 10 || posX >= zoneWidth - 10) velX *= -1;
       if (posY <= 10 || posY >= zoneHeight - 10) velY *= -1;
 
@@ -353,7 +399,6 @@
 
     let continuousMotion = setInterval(moveNoBtnConstantly, 20);
 
-    // Escape rapidly if cursor/touch gets close
     function escapeMouse(e) {
       const rect = btnZone.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -365,7 +410,6 @@
       const zoneWidth = btnZone.clientWidth - noBtn.clientWidth;
       const zoneHeight = btnZone.clientHeight - noBtn.clientHeight;
 
-      // Push button to a far distance from mouse pointer
       posX = mouseX > zoneWidth / 2 ? Math.random() * (zoneWidth / 3) : (zoneWidth / 2) + Math.random() * (zoneWidth / 3);
       posY = mouseY > zoneHeight / 2 ? Math.random() * (zoneHeight / 3) : (zoneHeight / 2) + Math.random() * (zoneHeight / 3);
 
@@ -401,7 +445,7 @@
       renderLockedPhotos();
     }
 
-    /* 4. PERMANENT IMAGE UPLOADER & LOCK SYSTEM */
+    /* 4. PERMANENT IMAGE UPLOADER, LOCK & LIGHTBOX PREVIEW SYSTEM */
     function triggerUpload(index) {
       let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_circle_photos') || '{}');
       if (lockedPhotos[index]) return;
@@ -433,10 +477,19 @@
       for (let i = 0; i < 5; i++) {
         const slotEl = document.getElementById(`slot-${i}`);
         if (lockedPhotos[i]) {
-          slotEl.innerHTML = `<img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" />`;
+          slotEl.innerHTML = `<img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" onclick="openLightbox('${lockedPhotos[i].imgSrc}')" />`;
           slotEl.style.cursor = "default";
         }
       }
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
     }
   </script>
 </body>
