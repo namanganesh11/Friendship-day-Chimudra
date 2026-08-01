@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Friendship Day ✨</title>
-  <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -18,14 +17,14 @@
       background-color: #05020a;
       color: #fff;
       min-height: 100vh;
-      overflow: hidden;
-      position: relative;
+      overflow-x: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
 
-    /* PINK DIGITAL RAIN CANVAS */
+    /* 1. PINK DIGITAL RAIN CANVAS */
     #pinkRainCanvas {
       position: fixed;
       top: 0;
@@ -35,22 +34,23 @@
       z-index: 1;
     }
 
-    /* PAGE CONTAINERS */
-    .page {
+    /* MAIN CONTAINER */
+    .container {
       position: relative;
       z-index: 10;
-      width: 90%;
-      max-width: 750px;
+      width: 92%;
+      max-width: 900px;
       text-align: center;
-      background: rgba(18, 5, 25, 0.85);
-      backdrop-filter: blur(12px);
-      padding: 40px 30px;
+      background: rgba(18, 5, 25, 0.88);
+      backdrop-filter: blur(14px);
+      padding: 40px 20px;
       border-radius: 24px;
       border: 1px solid rgba(244, 114, 182, 0.3);
       box-shadow: 0 0 35px rgba(236, 72, 153, 0.25);
+      margin: 20px 0;
     }
 
-    /* PAGE 1: FRONT QUESTION SCREEN */
+    /* PAGE 1: QUESTION SCREEN */
     #page1 h1 {
       font-size: 2.8rem;
       color: #f472b6;
@@ -63,10 +63,10 @@
       font-size: 1.4rem;
       color: #fbcfe8;
       text-shadow: 0 0 8px rgba(251, 207, 232, 0.5);
-      margin-bottom: 80px;
+      margin-bottom: 70px;
     }
 
-    /* BUTTONS AREA */
+    /* BUTTON ZONE */
     .button-zone {
       position: relative;
       width: 100%;
@@ -87,7 +87,6 @@
       box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
     }
 
-    /* YES BUTTON - BOTTOM CENTER */
     #yesBtn {
       background: linear-gradient(135deg, #ec4899, #f43f5e);
       color: white;
@@ -100,7 +99,6 @@
       box-shadow: 0 0 30px rgba(244, 63, 94, 0.8);
     }
 
-    /* NO BUTTON - DODGES MOUSE */
     #noBtn {
       position: absolute;
       background: #334155;
@@ -110,131 +108,165 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* PAGE 2: MEMORIES DISPLAY */
+    /* PAGE 2: MAIN WISH & SURROUNDING PHOTOS */
     #page2 {
       display: none;
-      max-height: 85vh;
-      overflow-y: auto;
     }
 
-    #page2 h2 {
-      font-size: 2.2rem;
-      color: #f472b6;
-      margin-bottom: 8px;
-      text-shadow: 0 0 10px rgba(244, 114, 182, 0.6);
-    }
-
-    .sub-heading {
+    .quote-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 4px solid #f472b6;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin-bottom: 25px;
       color: #fbcfe8;
       font-style: italic;
-      margin-bottom: 20px;
+      font-size: 1.05rem;
+      line-height: 1.5;
     }
 
-    /* ADMIN UPLOADER BOX */
-    .upload-box {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px dashed #f472b6;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 25px;
-      cursor: pointer;
-      transition: background 0.3s;
+    .main-wish-header {
+      margin: 30px 0;
     }
 
-    .upload-box:hover {
-      background: rgba(244, 114, 182, 0.1);
+    .main-wish {
+      font-size: 2.6rem;
+      color: #f472b6;
+      text-shadow: 0 0 20px rgba(244, 114, 182, 0.9), 0 0 35px rgba(236, 72, 153, 0.6);
+      margin-bottom: 8px;
     }
 
-    .upload-box input {
-      display: none;
-    }
-
-    /* GALLERY DISPLAY FOR 3 PHOTOS */
-    .memory-grid {
+    /* GRID FOR 5 PHOTO CARDS SURROUNDING THE WISH */
+    .surround-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 18px;
-      margin-top: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
     }
 
-    .memory-card {
-      background: rgba(30, 20, 40, 0.85);
-      border-radius: 16px;
-      padding: 12px;
-      border: 1px solid rgba(244, 114, 182, 0.4);
+    .photo-slot {
+      background: rgba(30, 20, 40, 0.9);
+      border-radius: 18px;
+      padding: 14px;
+      border: 1px solid rgba(244, 114, 182, 0.3);
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      min-height: 250px;
+      position: relative;
     }
 
-    .memory-card img {
+    /* PLUS ICON FOR UNFILLED SLOTS */
+    .plus-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(244, 114, 182, 0.15);
+      border: 2px dashed #f472b6;
+      color: #f472b6;
+      font-size: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(244, 114, 182, 0.2);
+    }
+
+    .plus-btn:hover {
+      transform: scale(1.1);
+      background: rgba(244, 114, 182, 0.3);
+      box-shadow: 0 0 25px rgba(244, 114, 182, 0.5);
+    }
+
+    /* LOCKED DISPLAYED IMAGE */
+    .photo-slot img {
       width: 100%;
-      height: 180px;
+      height: 190px;
       object-fit: cover;
       border-radius: 12px;
       margin-bottom: 12px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .memory-card .caption {
+    .photo-slot .caption {
       color: #fbcfe8;
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 0.92rem;
+      line-height: 1.4;
       font-style: italic;
       text-align: center;
-      padding: 0 5px;
     }
 
-    .photo-count-badge {
-      display: inline-block;
-      background: #ec4899;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-bottom: 10px;
+    /* Hidden file inputs */
+    input[type="file"] {
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- PINK RAIN CANVAS -->
+  <!-- PINK DIGITAL RAIN CANVAS -->
   <canvas id="pinkRainCanvas"></canvas>
 
-  <!-- PAGE 1: FRONT SCREEN -->
-  <div class="page" id="page1">
-    <h1>Happy Friendship Day</h1>
-    <p class="sub-text">Will you be my friend forever?</p>
+  <div class="container">
+    <!-- PAGE 1 -->
+    <div id="page1">
+      <h1>Happy Friendship Day</h1>
+      <p class="sub-text">Will you be my friend forever?</p>
 
-    <div class="button-zone" id="btnZone">
-      <button class="btn" id="yesBtn" onclick="goToPage2()">YES! ❤️</button>
-      <button class="btn" id="noBtn">NO 😜</button>
-    </div>
-  </div>
-
-  <!-- PAGE 2: MEMORY GALLERY PAGE -->
-  <div class="page" id="page2">
-    <h2>Our Forever Memories ✨</h2>
-    <p class="sub-heading">"Some souls just click, and life gets a whole lot brighter."</p>
-
-    <div class="photo-count-badge" id="photoCount">0 / 3 Memories Added</div>
-
-    <!-- Upload Box (Auto-locks after 3 photos) -->
-    <div class="upload-box" id="uploadBox" onclick="document.getElementById('photoInput').click()">
-      📁 <strong>Click here to pick 3 special photos of us</strong>
-      <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotos(event)" />
+      <div class="button-zone" id="btnZone">
+        <button class="btn" id="yesBtn" onclick="goToPage2()">YES! ❤️</button>
+        <button class="btn" id="noBtn">NO 😜</button>
+      </div>
     </div>
 
-    <!-- Photo Gallery Grid -->
-    <div class="memory-grid" id="memoryGrid"></div>
+    <!-- PAGE 2 -->
+    <div id="page2">
+      <!-- Friendship Quote -->
+      <div class="quote-box">
+        "Friendship is not about who you've known the longest... It's about who came into your life, said 'I'm here for you,' and proved it." ✨
+      </div>
+
+      <!-- Center Wish -->
+      <div class="main-wish-header">
+        <h1 class="main-wish">Happy Friendship Day, Chinmudra! 💖</h1>
+      </div>
+
+      <!-- 5 Photo Slots Surrounding Wish -->
+      <div class="surround-grid" id="surroundGrid">
+        <!-- Slot 0 -->
+        <div class="photo-slot" id="slot-0">
+          <div class="plus-btn" onclick="triggerUpload(0)">+</div>
+          <input type="file" id="input-0" accept="image/*" onchange="uploadSinglePhoto(event, 0)" />
+        </div>
+        <!-- Slot 1 -->
+        <div class="photo-slot" id="slot-1">
+          <div class="plus-btn" onclick="triggerUpload(1)">+</div>
+          <input type="file" id="input-1" accept="image/*" onchange="uploadSinglePhoto(event, 1)" />
+        </div>
+        <!-- Slot 2 -->
+        <div class="photo-slot" id="slot-2">
+          <div class="plus-btn" onclick="triggerUpload(2)">+</div>
+          <input type="file" id="input-2" accept="image/*" onchange="uploadSinglePhoto(event, 2)" />
+        </div>
+        <!-- Slot 3 -->
+        <div class="photo-slot" id="slot-3">
+          <div class="plus-btn" onclick="triggerUpload(3)">+</div>
+          <input type="file" id="input-3" accept="image/*" onchange="uploadSinglePhoto(event, 3)" />
+        </div>
+        <!-- Slot 4 -->
+        <div class="photo-slot" id="slot-4">
+          <div class="plus-btn" onclick="triggerUpload(4)">+</div>
+          <input type="file" id="input-4" accept="image/*" onchange="uploadSinglePhoto(event, 4)" />
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    /* -------------------------------------------------------------
-       1. PINK RAIN MATRIX ANIMATION
-    ------------------------------------------------------------- */
+    /* 1. PINK RAIN MATRIX ANIMATION */
     const canvas = document.getElementById('pinkRainCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -270,9 +302,7 @@
       canvas.height = window.innerHeight;
     });
 
-    /* -------------------------------------------------------------
-       2. IMPOSSIBLE 'NO' BUTTON DODGE LOGIC
-    ------------------------------------------------------------- */
+    /* 2. IMPOSSIBLE 'NO' BUTTON DODGE LOGIC */
     const noBtn = document.getElementById('noBtn');
     const btnZone = document.getElementById('btnZone');
 
@@ -302,86 +332,74 @@
       moveNoBtnAway();
     });
 
-    /* -------------------------------------------------------------
-       3. SWITCH TO PAGE 2 & CONFETTI
-    ------------------------------------------------------------- */
+    /* 3. SWITCH TO PAGE 2 & CONFETTI */
     function goToPage2() {
       document.getElementById('page1').style.display = 'none';
       document.getElementById('page2').style.display = 'block';
 
       confetti({
-        particleCount: 150,
+        particleCount: 160,
         spread: 90,
-        origin: { y: 0.6 },
+        origin: { y: 0.5 },
         colors: ['#f472b6', '#ec4899', '#ffffff']
       });
 
-      loadSavedMemories();
+      renderLockedPhotos();
     }
 
-    /* -------------------------------------------------------------
-       4. STRICT 3-PHOTO LIMIT WITH MESMERIZING CAPTIONS
-    ------------------------------------------------------------- */
-    // Mesmerizing captions for the 3 slots
-    const captions = [
-      "\"In the story of my life, having you as a friend is my favorite chapter. Thank you for making every ordinary day feel extraordinary.\" ✨",
-      "\"True friendship isn't about being inseparable—it's knowing that even when we are miles apart, nothing changes.\" 💖",
-      "\"Through every high and low, you've been my constant light. Here's to forever being each other's person!\" 🌸"
+    /* 4. PERMANENT IMAGE UPLOADER & LOCK SYSTEM */
+    const photoCaptions = [
+      "\"In the story of my life, having you as a friend is my absolute favorite chapter.\" ✨",
+      "\"True friendship isn't about being inseparable—it's knowing nothing changes even when life gets busy.\" 💖",
+      "\"Through every high and low, thank you for being my constant light and strength.\" 🌸",
+      "\"Good times become unforgettable memories simply because you are there to share them.\" 🥳",
+      "\"Here's to forever being each other's person. Happy Friendship Day, Chinmudra!\" 🎉"
     ];
 
-    function handlePhotos(event) {
-      const files = event.target.files;
-      let memories = JSON.parse(localStorage.getItem('friend_memories_3') || '[]');
-
-      for (let i = 0; i < files.length; i++) {
-        if (memories.length >= 3) {
-          alert("Maximum 3 photos allowed!");
-          break;
-        }
-
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-          const memoryData = {
-            imgSrc: e.target.result,
-            caption: captions[memories.length] // Assigns captivating wording dynamically
-          };
-
-          memories.push(memoryData);
-          localStorage.setItem('friend_memories_3', JSON.stringify(memories));
-          loadSavedMemories();
-        };
-
-        reader.readAsDataURL(file);
+    function triggerUpload(index) {
+      // Check if slot is already locked
+      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots') || '{}');
+      if (lockedPhotos[index]) {
+        return; // Slot is locked permanently
       }
+      document.getElementById(`input-${index}`).click();
     }
 
-    function loadSavedMemories() {
-      const grid = document.getElementById('memoryGrid');
-      const badge = document.getElementById('photoCount');
-      const uploadBox = document.getElementById('uploadBox');
-      
-      grid.innerHTML = '';
+    function uploadSinglePhoto(event, index) {
+      const file = event.target.files[0];
+      if (!file) return;
 
-      let memories = JSON.parse(localStorage.getItem('friend_memories_3') || '[]');
-      badge.innerText = `${memories.length} / 3 Memories Added`;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots') || '{}');
+        
+        // Save photo permanently to slot
+        lockedPhotos[index] = {
+          imgSrc: e.target.result,
+          caption: photoCaptions[index]
+        };
 
-      if (memories.length >= 3) {
-        uploadBox.style.display = 'none'; // Lock upload box after 3 photos
-      } else {
-        uploadBox.style.display = 'block';
+        localStorage.setItem('chinmudra_locked_slots', JSON.stringify(lockedPhotos));
+        renderLockedPhotos();
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function renderLockedPhotos() {
+      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots') || '{}');
+
+      for (let i = 0; i < 5; i++) {
+        const slotEl = document.getElementById(`slot-${i}`);
+        if (lockedPhotos[i]) {
+          // Permanently locked state: show image and caption, completely remove file input & plus icon
+          slotEl.innerHTML = `
+            <img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" />
+            <p class="caption">${lockedPhotos[i].caption}</p>
+          `;
+          slotEl.style.cursor = "default";
+        }
       }
-
-      memories.forEach(mem => {
-        const card = document.createElement('div');
-        card.className = 'memory-card';
-        card.innerHTML = `
-          <img src="${mem.imgSrc}" alt="Our Memory" />
-          <p class="caption">${mem.caption}</p>
-        `;
-        grid.appendChild(card);
-      });
     }
   </script>
 </body>
