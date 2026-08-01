@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Friendship Day ✨</title>
+  <title>Happy Friendship Day Chinmudra ✨</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* 1. PINK DIGITAL RAIN CANVAS */
+    /* PINK DIGITAL RAIN CANVAS */
     #pinkRainCanvas {
       position: fixed;
       top: 0;
@@ -34,12 +34,12 @@
       z-index: 1;
     }
 
-    /* MAIN CONTAINER */
+    /* CONTAINER STYLING */
     .container {
       position: relative;
       z-index: 10;
-      width: 92%;
-      max-width: 900px;
+      width: 95%;
+      max-width: 950px;
       text-align: center;
       background: rgba(18, 5, 25, 0.88);
       backdrop-filter: blur(14px);
@@ -50,7 +50,7 @@
       margin: 20px 0;
     }
 
-    /* PAGE 1: QUESTION SCREEN */
+    /* PAGE 1: FRONT QUESTION SCREEN */
     #page1 h1 {
       font-size: 2.8rem;
       color: #f472b6;
@@ -108,7 +108,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* PAGE 2: MAIN WISH & SURROUNDING PHOTOS */
+    /* PAGE 2: QUOTE & SURROUNDING WISH SLOTS */
     #page2 {
       display: none;
     }
@@ -126,7 +126,7 @@
     }
 
     .main-wish-header {
-      margin: 30px 0;
+      margin: 25px 0 35px 0;
     }
 
     .main-wish {
@@ -136,37 +136,35 @@
       margin-bottom: 8px;
     }
 
-    /* GRID FOR 5 PHOTO CARDS SURROUNDING THE WISH */
+    /* 5 PHOTO SLOTS GRID SURROUNDING THE MAIN QUOTE & WISH */
     .surround-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 16px;
       margin-top: 25px;
     }
 
     .photo-slot {
       background: rgba(30, 20, 40, 0.9);
       border-radius: 18px;
-      padding: 14px;
+      padding: 12px;
       border: 1px solid rgba(244, 114, 182, 0.3);
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 250px;
-      position: relative;
+      min-height: 190px;
     }
 
-    /* PLUS ICON FOR UNFILLED SLOTS */
+    /* PLUS ICON STYLING */
     .plus-btn {
-      width: 70px;
-      height: 70px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
       background: rgba(244, 114, 182, 0.15);
       border: 2px dashed #f472b6;
       color: #f472b6;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -181,25 +179,15 @@
       box-shadow: 0 0 25px rgba(244, 114, 182, 0.5);
     }
 
-    /* LOCKED DISPLAYED IMAGE */
+    /* DISPLAYED LOCKED IMAGE */
     .photo-slot img {
       width: 100%;
-      height: 190px;
+      height: 180px;
       object-fit: cover;
       border-radius: 12px;
-      margin-bottom: 12px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .photo-slot .caption {
-      color: #fbcfe8;
-      font-size: 0.92rem;
-      line-height: 1.4;
-      font-style: italic;
-      text-align: center;
-    }
-
-    /* Hidden file inputs */
     input[type="file"] {
       display: none;
     }
@@ -229,7 +217,7 @@
         "Friendship is not about who you've known the longest... It's about who came into your life, said 'I'm here for you,' and proved it." ✨
       </div>
 
-      <!-- Center Wish -->
+      <!-- Main Wish -->
       <div class="main-wish-header">
         <h1 class="main-wish">Happy Friendship Day, Chinmudra! 💖</h1>
       </div>
@@ -266,6 +254,12 @@
   </div>
 
   <script>
+    /* CLEAR ALL PREVIOUS CACHED PHOTOS */
+    localStorage.removeItem('chinmudra_locked_slots_v4');
+    localStorage.removeItem('chinmudra_locked_slots_v3');
+    localStorage.removeItem('chinmudra_locked_slots_v2');
+    localStorage.removeItem('chinmudra_locked_slots');
+
     /* 1. PINK RAIN MATRIX ANIMATION */
     const canvas = document.getElementById('pinkRainCanvas');
     const ctx = canvas.getContext('2d');
@@ -348,20 +342,9 @@
     }
 
     /* 4. PERMANENT IMAGE UPLOADER & LOCK SYSTEM */
-    const photoCaptions = [
-      "\"In the story of my life, having you as a friend is my absolute favorite chapter.\" ✨",
-      "\"True friendship isn't about being inseparable—it's knowing nothing changes even when life gets busy.\" 💖",
-      "\"Through every high and low, thank you for being my constant light and strength.\" 🌸",
-      "\"Good times become unforgettable memories simply because you are there to share them.\" 🥳",
-      "\"Here's to forever being each other's person. Happy Friendship Day, Chinmudra!\" 🎉"
-    ];
-
     function triggerUpload(index) {
-      // Check if slot is already locked
-      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots') || '{}');
-      if (lockedPhotos[index]) {
-        return; // Slot is locked permanently
-      }
+      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots_v5') || '{}');
+      if (lockedPhotos[index]) return; // Slot already locked
       document.getElementById(`input-${index}`).click();
     }
 
@@ -371,15 +354,14 @@
 
       const reader = new FileReader();
       reader.onload = function (e) {
-        let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots') || '{}');
+        let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots_v5') || '{}');
         
-        // Save photo permanently to slot
+        // Save image permanently to specific slot
         lockedPhotos[index] = {
-          imgSrc: e.target.result,
-          caption: photoCaptions[index]
+          imgSrc: e.target.result
         };
 
-        localStorage.setItem('chinmudra_locked_slots', JSON.stringify(lockedPhotos));
+        localStorage.setItem('chinmudra_locked_slots_v5', JSON.stringify(lockedPhotos));
         renderLockedPhotos();
       };
 
@@ -387,16 +369,13 @@
     }
 
     function renderLockedPhotos() {
-      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots') || '{}');
+      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots_v5') || '{}');
 
       for (let i = 0; i < 5; i++) {
         const slotEl = document.getElementById(`slot-${i}`);
         if (lockedPhotos[i]) {
-          // Permanently locked state: show image and caption, completely remove file input & plus icon
-          slotEl.innerHTML = `
-            <img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" />
-            <p class="caption">${lockedPhotos[i].caption}</p>
-          `;
+          // Replace plus button with permanent image only
+          slotEl.innerHTML = `<img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" />`;
           slotEl.style.cursor = "default";
         }
       }
