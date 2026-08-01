@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Friendship Day Chinmudra ✨</title>
+  <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -24,7 +25,7 @@
       position: relative;
     }
 
-    /* PINK DIGITAL RAIN CANVAS */
+    /* 1. PINK DIGITAL RAIN CANVAS */
     #pinkRainCanvas {
       position: fixed;
       top: 0;
@@ -34,7 +35,7 @@
       z-index: 1;
     }
 
-    /* CONTAINER STYLING */
+    /* MAIN CONTAINER */
     .container {
       position: relative;
       z-index: 10;
@@ -174,28 +175,6 @@
     .slot-3 { bottom: 50px; left: 80px; }
     .slot-4 { top: 155px; left: 10px; }
 
-    /* PLUS ICON STYLING */
-    .plus-btn {
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background: rgba(244, 114, 182, 0.15);
-      border: 2px dashed #f472b6;
-      color: #f472b6;
-      font-size: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .plus-btn:hover {
-      transform: scale(1.15);
-      background: rgba(244, 114, 182, 0.35);
-      box-shadow: 0 0 20px rgba(244, 114, 182, 0.6);
-    }
-
     .photo-slot img {
       width: 100%;
       height: 100%;
@@ -209,11 +188,7 @@
       transform: scale(1.08);
     }
 
-    input[type="file"] {
-      display: none;
-    }
-
-    /* FULLSCREEN IMAGE PREVIEW LIGHTBOX WITH PERSON NAME HEADER */
+    /* FULLSCREEN LIGHTBOX PREVIEW MODAL */
     #lightbox {
       display: none;
       position: fixed;
@@ -274,11 +249,6 @@
       .slot-2 { bottom: 25px; right: 35px; }
       .slot-3 { bottom: 25px; left: 35px; }
       .slot-4 { top: 90px; left: -5px; }
-      .plus-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.3rem;
-      }
       .lightbox-title {
         font-size: 1.3rem;
       }
@@ -291,7 +261,7 @@
   <canvas id="pinkRainCanvas"></canvas>
 
   <div class="container">
-    <!-- PAGE 1 -->
+    <!-- PAGE 1: FRONT SCREEN -->
     <div id="page1">
       <h1>Happy Friendship Day</h1>
       <p class="sub-text">Will you be my friend forever?</p>
@@ -302,47 +272,43 @@
       </div>
     </div>
 
-    <!-- PAGE 2 -->
+    <!-- PAGE 2: WISH & 5 CIRCULAR PHOTOS -->
     <div id="page2">
       <div class="quote-box">
         "Friendship is not about who you've known the longest... It's about who came into your life, said 'I'm here for you,' and proved it." ✨
       </div>
 
-      <!-- 5 PHOTOS CIRCLE WRAPPER AROUND WISH -->
+      <!-- CIRCULAR PHOTO GRID AROUND WISH -->
       <div class="circle-wrapper">
         <div class="center-wish">
           Happy Friendship Day, Chinmudra! 💖
         </div>
 
-        <div class="photo-slot slot-0" id="slot-0">
-          <div class="plus-btn" onclick="triggerUpload(0)">+</div>
-          <input type="file" id="input-0" accept="image/*" onchange="uploadSinglePhoto(event, 0)" />
+        <!-- Replace image URLs or Base64 strings in src="..." below -->
+        <div class="photo-slot slot-0">
+          <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=400&q=80" alt="Memory 1" onclick="openLightbox(this.src)" />
         </div>
 
-        <div class="photo-slot slot-1" id="slot-1">
-          <div class="plus-btn" onclick="triggerUpload(1)">+</div>
-          <input type="file" id="input-1" accept="image/*" onchange="uploadSinglePhoto(event, 1)" />
+        <div class="photo-slot slot-1">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80" alt="Memory 2" onclick="openLightbox(this.src)" />
         </div>
 
-        <div class="photo-slot slot-2" id="slot-2">
-          <div class="plus-btn" onclick="triggerUpload(2)">+</div>
-          <input type="file" id="input-2" accept="image/*" onchange="uploadSinglePhoto(event, 2)" />
+        <div class="photo-slot slot-2">
+          <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80" alt="Memory 3" onclick="openLightbox(this.src)" />
         </div>
 
-        <div class="photo-slot slot-3" id="slot-3">
-          <div class="plus-btn" onclick="triggerUpload(3)">+</div>
-          <input type="file" id="input-3" accept="image/*" onchange="uploadSinglePhoto(event, 3)" />
+        <div class="photo-slot slot-3">
+          <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80" alt="Memory 4" onclick="openLightbox(this.src)" />
         </div>
 
-        <div class="photo-slot slot-4" id="slot-4">
-          <div class="plus-btn" onclick="triggerUpload(4)">+</div>
-          <input type="file" id="input-4" accept="image/*" onchange="uploadSinglePhoto(event, 4)" />
+        <div class="photo-slot slot-4">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Memory 5" onclick="openLightbox(this.src)" />
         </div>
       </div>
     </div>
   </div>
 
-  <!-- LIGHTBOX MODAL SHOWING CHINMUDRA'S IMAGE PREVIEW -->
+  <!-- LIGHTBOX PREVIEW MODAL -->
   <div id="lightbox" onclick="closeLightbox()">
     <span class="close-lightbox">&times;</span>
     <div class="lightbox-title">Memories with Chinmudra ✨</div>
@@ -390,10 +356,7 @@
     const noBtn = document.getElementById('noBtn');
     const btnZone = document.getElementById('btnZone');
 
-    let posX = 100;
-    let posY = 50;
-    let velX = 2.5;
-    let velY = 2;
+    let posX = 100, posY = 50, velX = 2.5, velY = 2;
 
     function moveNoBtnConstantly() {
       const zoneWidth = btnZone.clientWidth - noBtn.clientWidth;
@@ -453,48 +416,9 @@
         origin: { y: 0.5 },
         colors: ['#f472b6', '#ec4899', '#ffffff']
       });
-
-      renderLockedPhotos();
     }
 
-    /* 4. PERMANENT IMAGE UPLOADER, LOCK & LIGHTBOX PREVIEW SYSTEM */
-    function triggerUpload(index) {
-      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_circle_photos') || '{}');
-      if (lockedPhotos[index]) return;
-      document.getElementById(`input-${index}`).click();
-    }
-
-    function uploadSinglePhoto(event, index) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_circle_photos') || '{}');
-        
-        lockedPhotos[index] = {
-          imgSrc: e.target.result
-        };
-
-        localStorage.setItem('chinmudra_circle_photos', JSON.stringify(lockedPhotos));
-        renderLockedPhotos();
-      };
-
-      reader.readAsDataURL(file);
-    }
-
-    function renderLockedPhotos() {
-      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_circle_photos') || '{}');
-
-      for (let i = 0; i < 5; i++) {
-        const slotEl = document.getElementById(`slot-${i}`);
-        if (lockedPhotos[i]) {
-          slotEl.innerHTML = `<img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" onclick="openLightbox('${lockedPhotos[i].imgSrc}')" />`;
-          slotEl.style.cursor = "default";
-        }
-      }
-    }
-
+    /* 4. LIGHTBOX PREVIEW SYSTEM */
     function openLightbox(src) {
       document.getElementById('lightboxImg').src = src;
       document.getElementById('lightbox').style.display = 'flex';
