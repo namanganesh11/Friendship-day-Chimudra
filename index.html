@@ -108,7 +108,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* PAGE 2: QUOTE & SURROUNDING WISH SLOTS */
+    /* PAGE 2 LAYOUT */
     #page2 {
       display: none;
     }
@@ -125,35 +125,46 @@
       line-height: 1.5;
     }
 
-    .main-wish-header {
-      margin: 25px 0 35px 0;
+    /* FLEX LAYOUT FOR SURROUNDING THE MAIN WISH */
+    .wish-surround-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .top-photos, .bottom-photos {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .center-wish-box {
+      padding: 20px 10px;
     }
 
     .main-wish {
       font-size: 2.6rem;
       color: #f472b6;
       text-shadow: 0 0 20px rgba(244, 114, 182, 0.9), 0 0 35px rgba(236, 72, 153, 0.6);
-      margin-bottom: 8px;
     }
 
-    /* 5 PHOTO SLOTS GRID SURROUNDING THE MAIN QUOTE & WISH */
-    .surround-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 16px;
-      margin-top: 25px;
-    }
-
+    /* PHOTO SLOT STYLING */
     .photo-slot {
       background: rgba(30, 20, 40, 0.9);
       border-radius: 18px;
-      padding: 12px;
+      padding: 10px;
       border: 1px solid rgba(244, 114, 182, 0.3);
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 190px;
+      width: 170px;
+      height: 170px;
     }
 
     /* PLUS ICON STYLING */
@@ -182,7 +193,7 @@
     /* DISPLAYED LOCKED IMAGE */
     .photo-slot img {
       width: 100%;
-      height: 180px;
+      height: 100%;
       object-fit: cover;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -217,49 +228,47 @@
         "Friendship is not about who you've known the longest... It's about who came into your life, said 'I'm here for you,' and proved it." ✨
       </div>
 
-      <!-- Main Wish -->
-      <div class="main-wish-header">
-        <h1 class="main-wish">Happy Friendship Day, Chinmudra! 💖</h1>
-      </div>
+      <!-- PHOTOS SURROUNDING THE WISH DIRECTLY -->
+      <div class="wish-surround-wrapper">
+        
+        <!-- Top Photos (2 Photos Above Wish) -->
+        <div class="top-photos">
+          <div class="photo-slot" id="slot-0">
+            <div class="plus-btn" onclick="triggerUpload(0)">+</div>
+            <input type="file" id="input-0" accept="image/*" onchange="uploadSinglePhoto(event, 0)" />
+          </div>
+          <div class="photo-slot" id="slot-1">
+            <div class="plus-btn" onclick="triggerUpload(1)">+</div>
+            <input type="file" id="input-1" accept="image/*" onchange="uploadSinglePhoto(event, 1)" />
+          </div>
+        </div>
 
-      <!-- 5 Photo Slots Surrounding Wish -->
-      <div class="surround-grid" id="surroundGrid">
-        <!-- Slot 0 -->
-        <div class="photo-slot" id="slot-0">
-          <div class="plus-btn" onclick="triggerUpload(0)">+</div>
-          <input type="file" id="input-0" accept="image/*" onchange="uploadSinglePhoto(event, 0)" />
+        <!-- CENTER WISH -->
+        <div class="center-wish-box">
+          <h1 class="main-wish">Happy Friendship Day, Chinmudra! 💖</h1>
         </div>
-        <!-- Slot 1 -->
-        <div class="photo-slot" id="slot-1">
-          <div class="plus-btn" onclick="triggerUpload(1)">+</div>
-          <input type="file" id="input-1" accept="image/*" onchange="uploadSinglePhoto(event, 1)" />
+
+        <!-- Bottom Photos (3 Photos Below Wish) -->
+        <div class="bottom-photos">
+          <div class="photo-slot" id="slot-2">
+            <div class="plus-btn" onclick="triggerUpload(2)">+</div>
+            <input type="file" id="input-2" accept="image/*" onchange="uploadSinglePhoto(event, 2)" />
+          </div>
+          <div class="photo-slot" id="slot-3">
+            <div class="plus-btn" onclick="triggerUpload(3)">+</div>
+            <input type="file" id="input-3" accept="image/*" onchange="uploadSinglePhoto(event, 3)" />
+          </div>
+          <div class="photo-slot" id="slot-4">
+            <div class="plus-btn" onclick="triggerUpload(4)">+</div>
+            <input type="file" id="input-4" accept="image/*" onchange="uploadSinglePhoto(event, 4)" />
+          </div>
         </div>
-        <!-- Slot 2 -->
-        <div class="photo-slot" id="slot-2">
-          <div class="plus-btn" onclick="triggerUpload(2)">+</div>
-          <input type="file" id="input-2" accept="image/*" onchange="uploadSinglePhoto(event, 2)" />
-        </div>
-        <!-- Slot 3 -->
-        <div class="photo-slot" id="slot-3">
-          <div class="plus-btn" onclick="triggerUpload(3)">+</div>
-          <input type="file" id="input-3" accept="image/*" onchange="uploadSinglePhoto(event, 3)" />
-        </div>
-        <!-- Slot 4 -->
-        <div class="photo-slot" id="slot-4">
-          <div class="plus-btn" onclick="triggerUpload(4)">+</div>
-          <input type="file" id="input-4" accept="image/*" onchange="uploadSinglePhoto(event, 4)" />
-        </div>
+
       </div>
     </div>
   </div>
 
   <script>
-    /* CLEAR ALL PREVIOUS CACHED PHOTOS */
-    localStorage.removeItem('chinmudra_locked_slots_v4');
-    localStorage.removeItem('chinmudra_locked_slots_v3');
-    localStorage.removeItem('chinmudra_locked_slots_v2');
-    localStorage.removeItem('chinmudra_locked_slots');
-
     /* 1. PINK RAIN MATRIX ANIMATION */
     const canvas = document.getElementById('pinkRainCanvas');
     const ctx = canvas.getContext('2d');
@@ -343,7 +352,7 @@
 
     /* 4. PERMANENT IMAGE UPLOADER & LOCK SYSTEM */
     function triggerUpload(index) {
-      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots_v5') || '{}');
+      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_ring_photos') || '{}');
       if (lockedPhotos[index]) return; // Slot already locked
       document.getElementById(`input-${index}`).click();
     }
@@ -354,14 +363,14 @@
 
       const reader = new FileReader();
       reader.onload = function (e) {
-        let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots_v5') || '{}');
+        let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_ring_photos') || '{}');
         
         // Save image permanently to specific slot
         lockedPhotos[index] = {
           imgSrc: e.target.result
         };
 
-        localStorage.setItem('chinmudra_locked_slots_v5', JSON.stringify(lockedPhotos));
+        localStorage.setItem('chinmudra_ring_photos', JSON.stringify(lockedPhotos));
         renderLockedPhotos();
       };
 
@@ -369,12 +378,12 @@
     }
 
     function renderLockedPhotos() {
-      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_locked_slots_v5') || '{}');
+      let lockedPhotos = JSON.parse(localStorage.getItem('chinmudra_ring_photos') || '{}');
 
       for (let i = 0; i < 5; i++) {
         const slotEl = document.getElementById(`slot-${i}`);
         if (lockedPhotos[i]) {
-          // Replace plus button with permanent image only
+          // Replace plus button with permanent locked image
           slotEl.innerHTML = `<img src="${lockedPhotos[i].imgSrc}" alt="Memory with Chinmudra" />`;
           slotEl.style.cursor = "default";
         }
