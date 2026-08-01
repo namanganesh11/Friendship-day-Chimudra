@@ -25,7 +25,7 @@
       position: relative;
     }
 
-    /* 1. PINK DIGITAL RAIN CANVAS */
+    /* PINK DIGITAL RAIN CANVAS */
     #pinkRainCanvas {
       position: fixed;
       top: 0;
@@ -35,7 +35,7 @@
       z-index: 1;
     }
 
-    /* MAIN CONTAINER */
+    /* CONTAINER STYLING */
     .container {
       position: relative;
       z-index: 10;
@@ -278,35 +278,31 @@
         "Friendship is not about who you've known the longest... It's about who came into your life, said 'I'm here for you,' and proved it." ✨
       </div>
 
-      <!-- CIRCULAR PHOTO GRID AROUND WISH EMBEDDED WITH YOUR EXACT 5 PHOTOS -->
+      <!-- CIRCULAR PHOTO GRID AROUND WISH -->
       <div class="circle-wrapper">
         <div class="center-wish">
           Happy Friendship Day, Chinmudra! 💖
         </div>
 
-        <!-- PHOTO 1: Arm/Flex Pose -->
+        <!-- EMBEDDED IMAGE CODE SLOTS -->
         <div class="photo-slot slot-0">
-          <img id="img0" alt="Memory 1" onclick="openLightbox(this.src)" />
+          <img src="data:image/jpeg;base64,PASTE_YOUR_BASE64_STRING_HERE_1" alt="Memory 1" onclick="openLightbox(this.src)" />
         </div>
 
-        <!-- PHOTO 2: Inverted Headstand Pose -->
         <div class="photo-slot slot-1">
-          <img id="img1" alt="Memory 2" onclick="openLightbox(this.src)" />
+          <img src="data:image/jpeg;base64,PASTE_YOUR_BASE64_STRING_HERE_2" alt="Memory 2" onclick="openLightbox(this.src)" />
         </div>
 
-        <!-- PHOTO 3: Seated Bow/Dhanurasana Pose -->
         <div class="photo-slot slot-2">
-          <img id="img2" alt="Memory 3" onclick="openLightbox(this.src)" />
+          <img src="data:image/jpeg;base64,PASTE_YOUR_BASE64_STRING_HERE_3" alt="Memory 3" onclick="openLightbox(this.src)" />
         </div>
 
-        <!-- PHOTO 4: Outdoor Rooftop Headstand Pose -->
         <div class="photo-slot slot-3">
-          <img id="img3" alt="Memory 4" onclick="openLightbox(this.src)" />
+          <img src="data:image/jpeg;base64,PASTE_YOUR_BASE64_STRING_HERE_4" alt="Memory 4" onclick="openLightbox(this.src)" />
         </div>
 
-        <!-- PHOTO 5: Instagram Chat Screenshot -->
         <div class="photo-slot slot-4">
-          <img id="img4" alt="Memory 5" onclick="openLightbox(this.src)" />
+          <img src="data:image/jpeg;base64,PASTE_YOUR_BASE64_STRING_HERE_5" alt="Memory 5" onclick="openLightbox(this.src)" />
         </div>
       </div>
     </div>
@@ -320,25 +316,6 @@
   </div>
 
   <script>
-    /* YOUR 5 UPLOADED PHOTOS EMBEDDED AS BASE64 STRINGS DIRECTLY IN CODE */
-    const imageSources = [
-      "1000093642.jpg",
-      "1000093640.jpg",
-      "1000093638.jpg",
-      "1000093636.jpg",
-      "1000093547.jpg"
-    ];
-
-    // Populate images automatically on load
-    window.addEventListener('DOMContentLoaded', () => {
-      for (let i = 0; i < 5; i++) {
-        const imgEl = document.getElementById(`img${i}`);
-        if (imgEl) {
-          imgEl.src = imageSources[i];
-        }
-      }
-    });
-
     /* 1. PINK RAIN MATRIX ANIMATION */
     const canvas = document.getElementById('pinkRainCanvas');
     const ctx = canvas.getContext('2d');
